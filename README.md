@@ -1,5 +1,16 @@
 # ClusteringBankClients
 
+![ClusteringBankClients](ClusteringBankClients.png)
+
+
+This repository contains a practical exercise focused on clustering techniques, designed to train and enhance skills in data analysis and machine learning. The context of this exercise revolves around a dataset from direct marketing campaigns via phone calls conducted by a Portuguese banking institution. The primary goal of this classification project is to predict whether a client will subscribe to a term deposit, which is marked by the target variable 'y'.
+
+The aim of this project is to apply various clustering algorithms to understand better and segment the bank's clientele based on their characteristics and their responses to previous marketing campaigns. By exploring different clustering approaches such as K-means, DBSCAN, and Density Peak Clustering (DPC), this exercise seeks to identify distinct customer groups, which can help in devising more tailored marketing strategies that could potentially increase the subscription rates of term deposits.
+
+Github: https://github.com/JMartinArocha/ClusteringBankClients
+
+Source: https://archive.ics.uci.edu/dataset/222/bank+marketing
+
 ## Badges
 
 ![GitHub license](https://img.shields.io/github/license/JMartinArocha/ClusteringBankClients.svg)
@@ -8,6 +19,67 @@
 ![issues](https://img.shields.io/github/issues/JMartinArocha/ClusteringBankClients)
 ![commit-activity](https://img.shields.io/github/commit-activity/m/JMartinArocha/ClusteringBankClients)
 ![repo-size](https://img.shields.io/github/repo-size/JMartinArocha/ClusteringBankClients)
+
+### About virtual envs
+
+Using a virtual environment in Python is a best practice for managing project dependencies. It allows you to create a self-contained directory that contains all the Python executable files and packages you need for your project. This way, you can avoid conflicts between package versions across different projects.
+
+Why Use a Virtual Environment?
+Dependency Management: Each project can have its dependencies without affecting other projects or the global Python installation.
+Reproducibility: Makes it easier to share and collaborate with others, ensuring that everyone has the same setup.
+Isolation: Prevents inadvertent changes to system files and configurations.
+Setting Up a Virtual Environment
+Here’s how to set up a virtual environment for your clustering project:
+
+1. Install Virtual Environment
+First, you need to install the virtualenv package if it's not already installed. This package allows you to create virtual environments in Python. You can install it using pip:
+
+```shell
+pip install virtualenv
+```
+
+2. Create a Virtual Environment
+Navigate to your project directory, or where you want to set up your project:
+
+```shell
+cd path/to/your/project
+```
+
+Now, create a virtual environment within this directory:
+
+Here, venv is the name of the virtual environment directory. You can name it anything, but venv or .venv is typical.
+
+``` shell
+virtualenv venv
+```
+
+3. Activate the Virtual Environment
+Before using the environment, you need to activate it:
+
+```shell
+venv\Scripts\activate # Windows
+source venv/bin/activate # Linux/macOS
+```
+
+Deactivate the Environment
+To stop using the virtual environment and go back to your global Python, you simply type:
+
+```shell
+deactivate
+```
+
+Keeping Track of Dependencies
+To make it easier for others to set up the same environment, it’s good practice to save your dependencies in a requirements.txt file:
+
+```shell
+pip freeze > requirements.txt
+```
+
+This command writes a list of all installed packages and their versions to the requirements.txt file. Others can install all required packages using:
+
+```shell
+pip install -r requirements.txt
+```
 
 ### Prerequisites
 
@@ -26,7 +98,6 @@ The project utilizes a shared Python utility script hosted on GitHub Gist. This 
 
 Below is the procedure to fetch and save the `ml_utilities.py` script programmatically:
 
-
 ## Data clean and normalization
 
 This section of the code involves the preprocessing of categorical data within the dataset. We utilize the LabelEncoder from sklearn.preprocessing to convert each categorical column into a format that can be easily used by machine learning algorithms. This step is crucial as it translates categorical labels into a numeric format where each unique label in a column is assigned a corresponding integer. The included columns such as 'land_surface_condition', 'foundation_type', among others, are transformed to enhance the model's ability to learn from these features effectively.
@@ -37,7 +108,6 @@ Missing values are filled using the forward fill method to maintain data continu
 # Feature selection
 
 Given the objective of predicting whether a client will subscribe to a term deposit based on the provided data, we need to carefully select features that might influence this decision. Let's analyze the potential impact of each feature in the context of predicting the likelihood of a subscription.
-
 
 - Age (numeric): Different age groups might have different financial needs and priorities, affecting their likelihood to invest in term deposits.
 
@@ -114,6 +184,26 @@ Reduce Dimensionality: PCA helps in reducing the number of features by creating 
 
 Consider Multicollinearity: Since PCA components are orthogonal (independent), using them instead of correlated original features can help in models where multicollinearity is a concern, such as linear regression.
 
-### Conclusion:
+### PCA conclusion:
 
 From the PCA analysis, we can conclude that features like the number of days since last contact, the number of contacts before the current campaign, client's age, and balance are particularly significant in explaining the variability in how clients react to term deposit offers. These insights can guide further feature engineering and model development, helping focus on the most informative variables for predicting term deposit subscriptions.
+
+## Silhouette Score
+
+The silhouette score is a metric used to evaluate the quality of clusters created by a clustering algorithm. It measures how similar an object is to its own cluster compared to other clusters. The silhouette score for each sample is a value between -1 and +1, where a high value indicates that the object is well matched to its own cluster and poorly matched to neighboring clusters.
+
+### How to Interpret the Silhouette Score
+
+Values close to +1 indicate that the sample is far away from the neighboring clusters.
+A value of 0 indicates that the sample is on or very close to the decision boundary between two neighboring clusters.
+
+Values less than 0 generally indicate that those samples might have been assigned to the wrong cluster.
+
+High average silhouette scores across all samples indicate robust and distinct clustering. If the scores are low or negative, it may suggest overlapping clusters, which could indicate that the number of clusters (K) is set improperly or the clustering algorithm does not fit the dataset well.
+
+## Dendrogram Analysis
+
+A dendrogram is a tree-like diagram that records the sequences of merges or splits in hierarchical clustering. It provides a visual insight into the structure of the data, showing the hierarchical relationship between clusters at different levels of granularity. Each merge is represented by a horizontal line joining clusters, with the height of the line representing the distance or dissimilarity between these clusters.
+
+Dendrograms are particularly useful in helping to decide the number of clusters by visually indicating where clusters can be "cut" based on the height of the joins. This visualization is essential for understanding the clustering dynamics and can guide the selection of an appropriate threshold for meaningful cluster separation.
+
